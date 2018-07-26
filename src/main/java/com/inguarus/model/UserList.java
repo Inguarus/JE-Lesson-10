@@ -10,4 +10,8 @@ public class UserList {
     public UserList(List<User> users) {
         this.users.addAll(users);
     }
+
+    public List<User> getUsers() {
+        return users;
+    }
 }

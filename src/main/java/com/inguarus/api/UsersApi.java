@@ -8,12 +8,8 @@ import com.inguarus.model.User;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
-@Path("/users")
+@Path("/user")
 public class UsersApi {
 
     private Gson gson = new GsonBuilder().create();
@@ -24,18 +20,6 @@ public class UsersApi {
                            @FormParam("second_name") String secondName,
                            @FormParam("age") int age) {
         User user = new User(firstName, secondName, age);
-
-        String path = System.getProperty("java.io.tmpdir");
-        System.out.println("UserApiTag path: " + path);
-
-        File file = new File(path, "operations.txt");
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(gson.toJson(user));
-            System.out.println("UserApiTag file location: " + file.getAbsolutePath());
-        } catch (IOException e) {
-            System.out.println("UserApiTag error: " + String.valueOf(e));
-        }
-
         UserDao.getInstance().addUser(user);
     }
 
@@ -66,7 +50,7 @@ public class UsersApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeUser(@PathParam("first_name") String firstName) {
         if (UserDao.getInstance().remove(firstName)) {
-            String json = "{\"result\" : \"Removed user with name: " + firstName + "\"}";
+            String json = "{\"result\" : \"Removed user with first name: " + firstName + "\"}";
             return Response.status(Response.Status.OK).entity(json).build();
         } else {
             String json = "{\"result\" : \"User not found: " + firstName + "\"}";
