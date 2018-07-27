@@ -14,7 +14,7 @@ public class UserDao {
     private static UserDao instance;
     private static List<User> users = new ArrayList<>();
     private static final String FILE_NAME = "all_operations.txt";
-    private static final String PATH = "D:\\Users\\Рабочий стол\\Скачанные файлы\\TestMavenApi";
+    private static final String PATH = System.getProperty("java.io.tmpdir");
     private static Gson gson = new GsonBuilder().create();
 
     static {
